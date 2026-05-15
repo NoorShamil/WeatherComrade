@@ -1,0 +1,21 @@
+﻿@model WeatherComrade.Api.Models.HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (Model.WeatherData != null)
+{
+    <h1>@Model.WeatherData.Name</h1>
+
+    <h2>@Model.WeatherData.Main.Temp°C</h2>
+
+    <p>@Model.WeatherData.Weather[0].Description</p>
+
+    <img src="https://openweathermap.org/img/wn/@(Model.WeatherData.Weather[0].Icon)@@2x.png" />
+
+    <hr />
+
+    <img src="@Model.Companion.Image" width="200" />
+
+    <h3>@Model.Companion.Recommendation</h3>
+}
