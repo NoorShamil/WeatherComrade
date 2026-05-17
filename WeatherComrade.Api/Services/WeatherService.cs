@@ -35,4 +35,26 @@ public class WeatherService
                 PropertyNameCaseInsensitive = true
             });
     }
+
+    public async Task<ForecastResponse?> GetForecastAsync(string city)
+    {
+        var apiKey = _configuration["WeatherApi:ApiKey"];
+
+        var url =
+            $"https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={apiKey}&units=metric";
+
+        var response = await _httpClient.GetAsync(url);
+
+        if (!response.IsSuccessStatusCode)
+            return null;
+
+        var json = await response.Content.ReadAsStringAsync();
+
+        return JsonSerializer.Deserialize<ForecastResponse>(
+            json,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+    }
 }

@@ -22,6 +22,9 @@ public class HomeController : Controller
         var weather =
             await _weatherService.GetWeatherAsync("Winnipeg");
 
+        var forecast =
+            await _weatherService.GetForecastAsync("Winnipeg");
+
         var model = new HomeViewModel
         {
             WeatherData = weather
@@ -32,7 +35,7 @@ public class HomeController : Controller
             model.Companion =
                 _recommendationService.GetCompanionState(weather);
         }
-
+        model.ForecastData = forecast;
         return View(model);
     }
 }
