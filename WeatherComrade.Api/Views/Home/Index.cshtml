@@ -2,15 +2,21 @@
 @{
     ViewData["Title"] = "WeatherComrade";
 
-    var labels =
+    var dailyForecasts =
         Model.ForecastData?.List
+            .Where(f => f.DateText.Contains("12:00:00"))
             .Take(5)
-            .Select(f => f.DateText)
+            .ToList();
+
+    var labels =
+        dailyForecasts?
+            .Select(f =>
+                DateTime.Parse(f.DateText)
+                    .ToString("ddd"))
             .ToList();
 
     var temperatures =
-        Model.ForecastData?.List
-            .Take(5)
+        dailyForecasts?
             .Select(f => f.Main.Temp)
             .ToList();
 }
@@ -63,12 +69,12 @@
 
             <div class="forecast-container">
 
-                @foreach (var item in Model.ForecastData.List.Take(5))
+                @foreach (var item in dailyForecasts)
                 {
                     <div class="forecast-card">
 
                         <h4>
-                            @item.DateText
+                            @DateTime.Parse(item.DateText).ToString("dddd")
                         </h4>
 
                         <img src="https://openweathermap.org/img/wn/@(item.Weather[0].Icon)@@2x.png" />

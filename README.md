@@ -2,3 +2,6 @@ WeatherComrade is a weather companion web application built with ASP.NET Core MV
 
 Images and Sprites in development
 UI in process
+Background art in WIP
+Companion intraction complexity in Progress
+Companion assests/ art :- WIP
