@@ -1,45 +1,98 @@
 ﻿@model WeatherComrade.Api.Models.HomeViewModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "WeatherComrade";
+
+    var labels =
+        Model.ForecastData?.List
+            .Take(5)
+            .Select(f => f.DateText)
+            .ToList();
+
+    var temperatures =
+        Model.ForecastData?.List
+            .Take(5)
+            .Select(f => f.Main.Temp)
+            .ToList();
 }
 
-@if (Model.WeatherData != null)
-{
-    <h1>@Model.WeatherData.Name</h1>
+<div class="weather-page">
 
-    <h2>@Model.WeatherData.Main.Temp°C</h2>
-
-    <p>@Model.WeatherData.Weather[0].Description</p>
-
-    <img src="https://openweathermap.org/img/wn/@(Model.WeatherData.Weather[0].Icon)@@2x.png" />
-
-    <hr />
-
-    <img src="@Model.Companion.Image" width="200" />
-
-    <h3>@Model.Companion.Recommendation</h3>
-}
-
-@if (Model.ForecastData != null)
-{
-    <div class="forecast-container">
-
-        @foreach (var item in Model.ForecastData.List.Take(5))
+    <div class="weather-section">
+        @if (Model.WeatherData != null)
         {
-            <div class="forecast-card">
+            <div class="weather-card">
 
-                <h4>
-                    @item.DateText
-                </h4>
+                <h1 class="city-name">
+                    @Model.WeatherData.Name
+                </h1>
 
-                <img src="https://openweathermap.org/img/wn/@(item.Weather[0].Icon)@@2x.png" />
+                <img class="weather-icon"
+                     src="https://openweathermap.org/img/wn/@(Model.WeatherData.Weather[0].Icon)@@2x.png" />
 
-                <p>
-                    @item.Main.Temp°C
+                <h2 class="temperature">
+                    @Model.WeatherData.Main.Temp°C
+                </h2>
+
+                <p class="weather-description">
+                    @Model.WeatherData.Weather[0].Description
                 </p>
+
+            </div>
+        }
+        @if (Model.Companion != null)
+        {
+            <div class="companion-card">
+
+                <img class="companion-image" src="@Model.Companion.Image" />
+
+                <h3 class="recommendation-text">
+                    @Model.Companion.Recommendation
+                </h3>
 
             </div>
         }
 
     </div>
-}
+    @if (Model.ForecastData != null)
+    {
+        <div class="forecast-section">
+
+            <h2 class="section-title">
+                5-Day Forecast
+            </h2>
+
+            <div class="forecast-container">
+
+                @foreach (var item in Model.ForecastData.List.Take(5))
+                {
+                    <div class="forecast-card">
+
+                        <h4>
+                            @item.DateText
+                        </h4>
+
+                        <img src="https://openweathermap.org/img/wn/@(item.Weather[0].Icon)@@2x.png" />
+
+                        <p class="forecast-temp">
+                            @item.Main.Temp°C
+                        </p>
+
+                    </div>
+                }
+
+            </div>
+        </div>
+    }
+    <div class="chart-section">
+
+        <h2 class="section-title">
+            Temperature Trend
+        </h2>
+
+        <canvas id="temperatureChart" data-labels='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(labels))'
+                data-temperatures='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(temperatures))'>
+        </canvas>
+
+    </div>
+
+</div>

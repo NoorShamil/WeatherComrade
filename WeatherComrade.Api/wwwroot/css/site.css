@@ -49,3 +49,141 @@ body {
   text-align: center;
   width: 120px;
 }
+
+body {
+  background: linear-gradient(to bottom right, #89cff0, #dff6ff);
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+}
+
+.weather-page {
+  padding: 40px;
+}
+
+.weather-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}
+
+.weather-card,
+.companion-card {
+  background: rgba(255, 255, 255, 0.85);
+
+  backdrop-filter: blur(10px);
+
+  border-radius: 25px;
+
+  padding: 30px;
+
+  width: 320px;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+
+  text-align: center;
+}
+
+.city-name {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.temperature {
+  font-size: 3rem;
+  margin: 10px 0;
+}
+
+.weather-description {
+  font-size: 1.2rem;
+  text-transform: capitalize;
+}
+
+.weather-icon {
+  width: 120px;
+}
+
+.companion-image {
+  width: 220px;
+
+  animation: float 3s ease-in-out infinite;
+}
+
+.recommendation-text {
+  margin-top: 20px;
+  font-size: 1.2rem;
+}
+
+.forecast-section {
+  margin-top: 30px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.forecast-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.forecast-card {
+  background: rgba(255, 255, 255, 0.9);
+
+  border-radius: 20px;
+
+  padding: 20px;
+
+  width: 150px;
+
+  text-align: center;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  transition: transform 0.2s ease;
+}
+
+.forecast-card:hover {
+  transform: translateY(-5px);
+}
+
+.forecast-temp {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.chart-section {
+  margin-top: 60px;
+
+  background: rgba(255, 255, 255, 0.9);
+
+  padding: 30px;
+
+  border-radius: 25px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#temperatureChart {
+  max-width: 100%;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
