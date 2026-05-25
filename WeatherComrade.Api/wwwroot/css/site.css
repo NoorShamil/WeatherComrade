@@ -23,7 +23,7 @@ html {
 
 body {
   margin-bottom: 60px;
-  background: linear-gradient(to bottom right, #89cff0, #dff6ff);
+  /* background: linear-gradient(to bottom right, #89cff0, #dff6ff); */
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
 }
@@ -40,7 +40,10 @@ body {
 }
 
 .weather-page {
+  min-height: 100vh;
+  width: 100%;
   padding: 40px;
+  box-sizing: border-box;
 }
 
 .weather-section {
@@ -169,4 +172,142 @@ body {
   100% {
     transform: translateY(0px);
   }
+}
+
+.daily-forecast-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.daily-forecast-card {
+  background: rgba(255, 255, 255, 0.9);
+
+  border-radius: 20px;
+
+  padding: 25px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.hourly-forecast-list {
+  display: flex;
+
+  gap: 15px;
+
+  overflow-x: auto;
+
+  padding-top: 15px;
+}
+
+.hourly-item {
+  min-width: 100px;
+
+  background: rgba(255, 255, 255, 0.7);
+
+  border-radius: 15px;
+
+  padding: 10px;
+
+  text-align: center;
+}
+
+.forecast-tabs {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 15px;
+
+  margin-bottom: 30px;
+}
+
+.forecast-tab {
+  border: none;
+
+  padding: 12px 20px;
+
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.7);
+
+  cursor: pointer;
+
+  font-weight: bold;
+
+  transition: 0.2s ease;
+}
+
+.forecast-tab:hover {
+  transform: translateY(-2px);
+}
+
+.active-tab {
+  background: #4b79a1;
+  color: white;
+}
+
+.forecast-day-content {
+  display: none;
+}
+
+.active-day {
+  display: block;
+}
+
+.sunny-weather {
+  background:
+    linear-gradient(to bottom right,
+      #f6d365,
+      #fda085);
+
+  min-height: 100vh;
+}
+
+.rainy-weather {
+  background:
+    linear-gradient(to bottom right,
+      #4b79a1,
+      #283e51);
+
+  min-height: 100vh;
+
+}
+
+.snowy-weather {
+  background:
+    linear-gradient(to bottom right,
+      #e6edf5,
+      #ffffff);
+
+  min-height: 100vh;
+}
+
+.cloudy-weather {
+  background:
+    linear-gradient(to bottom right,
+      #bdc3c7,
+      #2c3e50);
+
+  min-height: 100vh;
+
+}
+
+.storm-weather {
+  background:
+    linear-gradient(to bottom right,
+      #232526,
+      #414345);
+
+  min-height: 100vh;
+
+}
+
+.default-weather {
+  background:
+    linear-gradient(to bottom right,
+      #89cff0,
+      #dff6ff);
+
+  min-height: 100vh;
 }

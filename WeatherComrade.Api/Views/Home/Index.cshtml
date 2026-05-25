@@ -2,26 +2,25 @@
 @{
     ViewData["Title"] = "WeatherComrade";
 
-    var dailyForecasts =
+    var groupedForecasts =
         Model.ForecastData?.List
-            .Where(f => f.DateText.Contains("12:00:00"))
+            .GroupBy(f =>
+                DateTime.Parse(f.DateText).Date)
             .Take(5)
             .ToList();
 
     var labels =
-        dailyForecasts?
-            .Select(f =>
-                DateTime.Parse(f.DateText)
-                    .ToString("ddd"))
-            .ToList();
+       groupedForecasts?
+           .Select(g => g.Key.ToString("ddd"))
+           .ToList();
 
     var temperatures =
-        dailyForecasts?
-            .Select(f => f.Main.Temp)
+        groupedForecasts?
+            .Select(g => g.Average(x => x.Main.Temp))
             .ToList();
 }
 
-<div class="weather-page">
+<div class="weather-page" data-weather-condition="@Model.WeatherData?.Weather[0].Main">
 
     <div class="weather-section">
         @if (Model.WeatherData != null)
@@ -59,34 +58,62 @@
         }
 
     </div>
-    @if (Model.ForecastData != null)
+    @if (groupedForecasts != null)
     {
         <div class="forecast-section">
 
             <h2 class="section-title">
                 5-Day Forecast
             </h2>
+            <div class="forecast-tabs">
 
-            <div class="forecast-container">
-
-                @foreach (var item in dailyForecasts)
+                @for (int i = 0; i < groupedForecasts.Count; i++)
                 {
-                    <div class="forecast-card">
+                    var day = groupedForecasts[i];
 
-                        <h4>
-                            @DateTime.Parse(item.DateText).ToString("dddd")
-                        </h4>
+                    <button class="forecast-tab @(i == 0 ? "active-tab" : "")" data-day="day-@i">
 
-                        <img src="https://openweathermap.org/img/wn/@(item.Weather[0].Icon)@@2x.png" />
+                        @day.Key.ToString("ddd")
 
-                        <p class="forecast-temp">
-                            @item.Main.Temp°C
-                        </p>
-
-                    </div>
+                    </button>
                 }
 
             </div>
+
+            @for (int i = 0; i < groupedForecasts.Count; i++)
+            {
+                var day = groupedForecasts[i];
+
+                <div class="forecast-day-content @(i == 0 ? "active-day" : "")" id="day-@i">
+
+                    <h3>
+                        @day.Key.ToString("dddd")
+                    </h3>
+
+                    <div class="hourly-forecast-list">
+
+                        @foreach (var item in day)
+                        {
+                            <div class="hourly-item">
+
+                                <p>
+                                    @DateTime.Parse(item.DateText).ToString("HH:mm")
+                                </p>
+
+                                <img src="https://openweathermap.org/img/wn/@(item.Weather[0].Icon)@@2x.png" width="50" />
+
+                                <p>
+                                    @item.Main.Temp°C
+                                </p>
+
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
         </div>
     }
     <div class="chart-section">
